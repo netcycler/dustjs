@@ -46,12 +46,8 @@ reference "reference"
   { return ["reference", n, f] }
 
 trans "trans"
-  = ld '_("' s:(!'"' !eol s:. {return s})+ '"' a:args ")" rd
-  { return ["trans", s.join(''), a] }
-
-args "args"
-  = a:(", " n:identifier {return n})*
-  { return ["args"].concat(a) }
+  = ld '_("' s:(!'"' !eol s:. {return s})+ '")' rd
+  { return ["trans", s.join('')] }
 
 partial "partial"
   = ld ">" n:(k:key {return ["literal", k]} / inline) c:context "/" rd
