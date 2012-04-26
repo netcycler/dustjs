@@ -12,7 +12,7 @@ body
   = p:part* { return ["body"].concat(p) }
 
 part
-  = comment / section / partial / special / reference / buffer
+  = comment / section / partial / special / reference / trans / buffer
 
 section "section"
   = t:sec_tag_start rd b:body e:bodies n:end_tag
@@ -44,6 +44,14 @@ bodies "bodies"
 reference "reference"
   = ld n:identifier f:filters rd
   { return ["reference", n, f] }
+
+trans "trans"
+  = ld '_("' s:(!'"' !eol s:. {return s})+ '"' a:args ")" rd
+  { return ["trans", s.join(''), a] }
+
+args "args"
+  = a:(", " n:identifier {return n})*
+  { return ["args"].concat(a) }
 
 partial "partial"
   = ld ">" n:(k:key {return ["literal", k]} / inline) c:context "/" rd
@@ -98,7 +106,7 @@ comment "comment"
   { return ["comment", c.join('')] }
 
 tag
-  = ld [#?^><+%:@/~%] (!rd !eol .)+ rd
+  = ld [#?^><+%:@/~%_] (!rd !eol .)+ rd
   / reference
 
 ld
