@@ -754,8 +754,8 @@ dust.nodes = {
       args.push('"' + key + '": ctx.getPath(null, ["'
                 + key.split('.').join('", "') + '"])');
     }
-    return '.write(dust.escapeHtml(dust.format("' + gettext(node[1])
-      + '", {' + args.join(",") + "})))";
+    return '.write(dust.escapeHtml(dust.format(gettext("' + node[1]
+      + '"), {' + args.join(",") + "})))";
   },
 
   args: function(context, node) {
