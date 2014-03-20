@@ -1,4 +1,3 @@
-
 //
 // Dust - Asynchronous Templating v0.4.0
 // http://akdubya.github.com/dustjs
@@ -7,11 +6,11 @@
 // Released under the MIT License.
 //
 
-var dust = {};
+var dust =  dust || {};
 
 (function(dust) {
 
-dust.cache = {};
+dust.cache = dust.cache || {};
 
 dust.register = function(name, tmpl) {
   if (!name) return;
@@ -510,7 +509,7 @@ dust.format = function(s, args) {
   for (var key in args) {
     if (args.hasOwnProperty(key)) {
     	s = s.replace("{" + key + "}", args[key]);
-    }  
+    }
   }
   return s;
 };
@@ -525,9 +524,9 @@ if (typeof exports !== "undefined") {
   module.exports = dust;
 }
 (function(dust){
-  
+
 var helpers = {
-  
+
   sep: function(chunk, context, bodies) {
     if (context.stack.index === context.stack.of - 1) {
       return chunk;
@@ -538,10 +537,10 @@ var helpers = {
   idx: function(chunk, context, bodies) {
     return bodies.block(chunk, context.push(context.stack.index));
   },
-  
+
   "if": function( chunk, context, bodies, params ){
     var cond = ( params.cond );
-    
+
     if( params && params.cond ){
       // resolve dust references in the expression
       if( typeof cond === "function" ){
@@ -557,11 +556,11 @@ var helpers = {
       // eval expressions with no dust references
       if( eval( cond ) ){
        return chunk.render( bodies.block, context );
-      } 
+      }
       if( bodies['else'] ){
        return chunk.render( bodies['else'], context );
       }
-    } 
+    }
     // no condition
     else {
       if( window.console ){
